@@ -1,0 +1,13 @@
+<div class="assignments-container">
+    <h2>Liste des devoirs</h2>
+    <ul>
+      <li *ngFor="let assignment of assignments; trackBy: trackByAssignmentNom">
+        <p *ngIf="assignment.rendu">
+          Le devoir {{ assignment.nom }} a été rendu le {{ assignment.dateDeRendu | date: 'dd/MM/yyyy' }}.
+        </p>
+        <p *ngIf="!assignment.rendu">
+          Le devoir {{ assignment.nom }} doit être rendu le {{ assignment.dateDeRendu | date: 'dd/MM/yyyy' }}.
+        </p>
+      </li>
+    </ul>
+  </div>

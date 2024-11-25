@@ -1,0 +1,14 @@
+<div class="add-assignment">
+  <h2>Ajouter un devoir</h2>
+  <form (ngSubmit)="onSubmit()" #assignmentForm="ngForm" class="form">
+    <mat-form-field>
+      <input matInput [(ngModel)]="assignment.nom" name="nom" placeholder="Nom du devoir" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="assignment.dateDeRendu" name="dateDeRendu" placeholder="Date limite" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-stroked-button color="primary" type="submit">Ajouter un devoir</button>
+  </form>
+</div>
