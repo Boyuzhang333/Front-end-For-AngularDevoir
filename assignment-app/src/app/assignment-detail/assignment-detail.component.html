@@ -15,6 +15,8 @@
 
   <mat-card-actions>
     <button mat-raised-button color="warn" (click)="onDelete()">Supprimer</button>
+    <button mat-raised-button color="primary" [routerLink]="['/assignment', assignment.id, 'edit']">
+      Modifier</button>
     <button mat-raised-button color="primary" routerLink="/list">Retour</button>
   </mat-card-actions>
 </mat-card>

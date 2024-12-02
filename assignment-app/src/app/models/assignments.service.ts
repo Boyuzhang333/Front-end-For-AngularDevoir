@@ -35,11 +35,14 @@ export class AssignmentsService {
   
 
   updateAssignment(assignment: Assignment): Observable<Assignment> {
-    const index = this.assignments.findIndex(a => a.nom === assignment.nom);
+    const index = this.assignments.findIndex((a) => a.id === assignment.id);
     if (index !== -1) {
-      this.assignments[index] = assignment;
+      this.assignments[index] = assignment; // 更新本地数组
     }
-    return of(assignment);//不加返回值，不给你调用之后的语句转ts文件
+    return of(assignment); // 返回更新后的作业
   }
+  
+ 
+  
   
 }

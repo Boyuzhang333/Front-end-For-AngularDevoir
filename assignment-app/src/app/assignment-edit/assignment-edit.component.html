@@ -1,1 +1,49 @@
-<p>assignment-edit works!</p>
+<div *ngIf="assignment" class="edit-assignment">
+    <h2>Modifier le devoir</h2>
+    <form (ngSubmit)="onSave()" #assignmentForm="ngForm" class="form">
+      <!-- 编辑名称 -->
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="assignment.nom"
+          name="nom"
+          placeholder="Nom du devoir"
+          required
+        />
+      </mat-form-field>
+  
+      <!-- 编辑日期 -->
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="assignment.dateDeRendu"
+          name="dateDeRendu"
+          placeholder="Date limite"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+  
+      <!-- 编辑 rendu 状态 -->
+      <mat-checkbox [(ngModel)]="assignment.rendu" name="rendu">
+        Rendu
+      </mat-checkbox>
+  
+      <!-- 提交和取消按钮 -->
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit">
+          Enregistrer
+        </button>
+        <button mat-raised-button color="warn" type="button" (click)="router.navigate(['/list'])">
+          Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <div *ngIf="!assignment">
+    <p>Chargement ou devoir introuvable...</p>
+  </div>
+  
