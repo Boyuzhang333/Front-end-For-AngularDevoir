@@ -10,6 +10,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-add-assignment',
@@ -21,7 +22,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
             MatNativeDateModule,
             FormsModule,
             ReactiveFormsModule,
-            MatFormFieldModule
+            MatFormFieldModule,
+            MatButton
 
 
   ],

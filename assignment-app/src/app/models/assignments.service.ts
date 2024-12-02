@@ -22,4 +22,18 @@ export class AssignmentsService {
     this.assignments.push(assignment);
     return of(assignment); // 返回包含新作业的 Observable
   }
+  deleteAssignment(assignment: Assignment): Observable<Assignment> {
+    this.assignments = this.assignments.filter(a => a !== assignment);
+    return of(assignment);
+    
+  }
+
+  updateAssignment(assignment: Assignment): Observable<Assignment> {
+    const index = this.assignments.findIndex(a => a.nom === assignment.nom);
+    if (index !== -1) {
+      this.assignments[index] = assignment;
+    }
+    return of(assignment);//不加返回值，不给你调用之后的语句转ts文件
+  }
+  
 }

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AssignmentsService } from '../models/assignments.service';
 import { RouterModule } from '@angular/router';
 import { Assignment } from '../models/assignment.model';
+import { AssignmentDetailComponent } from '../assignment-detail/assignment-detail.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,27 +12,49 @@ import { Assignment } from '../models/assignment.model';
   selector: 'app-assignment-list',
   templateUrl: './assignment-list.component.html',
   styleUrls: ['./assignment-list.component.css'],
-  imports: [CommonModule,
-            RouterModule
+  imports: [
+    CommonModule,
+    RouterModule,
+    AssignmentDetailComponent
   ]
 })
 export class AssignmentListComponent implements OnInit {
-  assignments: { nom: string; rendu: boolean; dateDeRendu: Date }[] = []; // 用于保存从服务获取的作业数据
+  assignments: Assignment[] = [];
+  selectedAssignment?: Assignment; // 当前选中的作业
 
-  constructor(private assignmentsService: AssignmentsService) {}
+  constructor(private assignmentsService: AssignmentsService,private router: Router) {}
 
   ngOnInit(): void {
-    // 调用服务来获取作业数据
     this.getAssignments();
   }
 
   getAssignments() {
-    this.assignmentsService.getAssignments().subscribe((assignments: any) => {
+    this.assignmentsService.getAssignments().subscribe((assignments: Assignment[]) => {
       this.assignments = assignments;
     });
   }
 
-  trackByAssignmentNom(index: number, assignment: { nom: string; rendu: boolean; dateDeRendu: Date }): string {
+  selectAssignment(assignment: Assignment) {
+    this.selectedAssignment = assignment;
+  }
+
+  onAssignmentDeleted(assignment: Assignment) {
+    // 删除选中作业
+    this.assignmentsService.deleteAssignment(assignment).subscribe(() => {
+      this.assignments = this.assignments.filter(a => a !== assignment);
+      this.selectedAssignment = undefined;
+      console.log('supprimer', assignment);
+    });
+  }
+
+  onAssignmentUpdated(assignment: Assignment) {
+    // 更新选中作业
+    this.assignmentsService.updateAssignment(assignment).subscribe(() => {
+      console.log('Assignment updated:', assignment);
+    });
+  }
+
+  trackByAssignmentNom(index: number, assignment: Assignment): string {
     return assignment.nom;
   }
 }
