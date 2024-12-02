@@ -7,9 +7,9 @@ import { Assignment } from '../models/assignment.model';
 })
 export class AssignmentsService {
   private assignments: Assignment[] = [
-    { nom: 'Devoir 1', rendu: true, dateDeRendu: new Date('2023-11-15') },
-    { nom: 'Devoir 2', rendu: false, dateDeRendu: new Date('2023-12-01') },
-    { nom: 'Devoir 3', rendu: true, dateDeRendu: new Date('2023-11-20') }
+    { id:1,nom: 'Devoir 1', rendu: true, dateDeRendu: new Date('2023-11-15') },
+    { id:2,nom: 'Devoir 2', rendu: false, dateDeRendu: new Date('2023-12-01') },
+    { id:3,nom: 'Devoir 3', rendu: true, dateDeRendu: new Date('2023-11-20') }
   ];
 
   constructor() {}
