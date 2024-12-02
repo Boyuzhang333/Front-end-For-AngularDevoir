@@ -13,6 +13,12 @@ export class AssignmentsService {
   ];
 
   constructor() {}
+  getAssignment(id: number): Observable<Assignment | undefined> {
+    // 从本地数组中找到匹配的作业
+    const assignment = this.assignments.find(a => a.id === id);
+    return of(assignment); // 返回一个 Observable
+  }
+  
 
   getAssignments(): Observable<Assignment[]> {
     return of(this.assignments);
@@ -23,10 +29,10 @@ export class AssignmentsService {
     return of(assignment); // 返回包含新作业的 Observable
   }
   deleteAssignment(assignment: Assignment): Observable<Assignment> {
-    this.assignments = this.assignments.filter(a => a !== assignment);
-    return of(assignment);
-    
+    this.assignments = this.assignments.filter(a => a.id !== assignment.id);
+    return of(assignment); // 返回已删除的作业
   }
+  
 
   updateAssignment(assignment: Assignment): Observable<Assignment> {
     const index = this.assignments.findIndex(a => a.nom === assignment.nom);

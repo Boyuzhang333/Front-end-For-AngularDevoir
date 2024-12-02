@@ -1,27 +1,64 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute,Router } from '@angular/router';
+import { AssignmentsService } from '../models/assignments.service';
 import { Assignment } from '../models/assignment.model';
-import { MatButton } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
+
+
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
-  imports: [CommonModule,
-            MatButton
-  ],
   templateUrl: './assignment-detail.component.html',
-  styleUrls: ['./assignment-detail.component.css']
+  styleUrls: ['./assignment-detail.component.css'],
+  imports: [
+            CommonModule,
+            FormsModule,
+            MatButtonModule,
+            MatCardModule,
+            MatCheckboxModule,
+            RouterModule
+  ]
 })
-export class AssignmentDetailComponent {
-  @Input() assignment!: Assignment;  // 接收来自父组件的作业数据
-  @Output() assignmentDeleted = new EventEmitter<Assignment>(); // 向父组件传递删除事件
-  @Output() assignmentUpdated = new EventEmitter<Assignment>(); // 向父组件传递更新事件
+export class AssignmentDetailComponent implements OnInit {
+  assignment!: Assignment;
 
-  onDelete() {
-    this.assignmentDeleted.emit(this.assignment);
+  isToDelete: boolean = false; // 用于复选框状态
+
+  constructor(
+    private route: ActivatedRoute, // 用于获取路由参数
+    private router: Router, 
+    private assignmentsService: AssignmentsService // 用于获取作业数据
+  ) {}
+
+  ngOnInit(): void {
+    // 从路由中获取 id
+    const id = this.route.snapshot.params['id'];
+
+    // 调用服务获取作业数据
+    this.assignmentsService.getAssignment(+id).subscribe((assignment) => {
+      if (assignment) {
+        this.assignment = assignment;
+      } else {
+        console.error(`Assignment with id ${id} not found.`);
+      }
+    });
   }
 
-  onToggleRendu() {
-    this.assignment.rendu = !this.assignment.rendu;
-    this.assignmentUpdated.emit(this.assignment);
+
+  onDelete(): void {
+    if (this.isToDelete && this.assignment) {
+      this.assignmentsService.deleteAssignment(this.assignment).subscribe(() => {
+        console.log('Assignment deleted:', this.assignment);
+        this.router.navigate(['/list']); // 删除后跳转回列表页面
+      });
+    } else {
+      console.log('Checkbox not selected. Assignment not deleted.');
+    }
+
   }
 }

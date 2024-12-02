@@ -1,11 +1,20 @@
-<div *ngIf="assignment" class="detail-container">
-    <h3>Détails du devoir: {{ assignment.nom }}</h3>
-    <p>Date limite : {{ assignment.dateDeRendu | date: 'dd/MM/yyyy' }}</p>
-    <p>Statut : {{ assignment.rendu ? 'Rendu' : 'Non rendu' }}</p>
-  
+<mat-card class="detail-container">
+  <mat-card-header>
+    <mat-card-title>Détails du devoir</mat-card-title>
+    <mat-card-subtitle>{{ assignment.nom }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p><strong>Date limite :</strong> {{ assignment.dateDeRendu | date: 'dd/MM/yyyy' }}</p>
+    <p><strong>Statut :</strong> {{ assignment.rendu ? 'Rendu' : 'Non rendu' }}</p>
+
     <div>
-      <button mat-raised-button color="primary" (click)="onToggleRendu()">Modifier le statut</button>
-      <button mat-raised-button color="warn" (click)="onDelete()">Supprimer</button>
+      <mat-checkbox [(ngModel)]="isToDelete">Cocher pour supprimer</mat-checkbox>
     </div>
-  </div>
-  
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="warn" (click)="onDelete()">Supprimer</button>
+    <button mat-raised-button color="primary" routerLink="/list">Retour</button>
+  </mat-card-actions>
+</mat-card>

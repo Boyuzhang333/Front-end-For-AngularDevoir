@@ -1,15 +1,23 @@
-<div *ngFor="let assignment of assignments; trackBy: trackByAssignmentNom" 
-     (click)="selectAssignment(assignment)"
-     [ngStyle]="{ 'background-color': assignment.rendu ? '#d4edda' : '#f8d7da' }"
-     class="assignment-item">
-  <p>
-    Le devoir {{ assignment.nom }} {{ assignment.rendu ? 'a été rendu le' : 'doit être rendu le' }} {{ assignment.dateDeRendu | date: 'dd/MM/yyyy' }}.
-  </p>
+<div class="list-container">
+  <h1>Liste des devoirs</h1>
+  <div
+    *ngFor="let assignment of assignments"
+    class="assignment-card"
+    [ngStyle]="{
+      'background-color': assignment.rendu ? '#d4edda' : '#f8d7da'
+    }"
+  >
+    <mat-card>
+      <mat-card-content>
+        <a [routerLink]="['/assignment', assignment.id]">
+          <h3>{{ assignment.nom }}</h3>
+        </a>
+        <p><strong>Date de rendu :</strong> {{ assignment.dateDeRendu | date: 'dd/MM/yyyy' }}</p>
+        <p>
+          <strong>Statut :</strong>
+          {{ assignment.rendu ? 'Rendu' : 'Non rendu' }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
-
-<app-assignment-detail 
-  *ngIf="selectedAssignment" 
-  [assignment]="selectedAssignment" 
-  (assignmentDeleted)="onAssignmentDeleted($event)"
-  (assignmentUpdated)="onAssignmentUpdated($event)">
-</app-assignment-detail>
