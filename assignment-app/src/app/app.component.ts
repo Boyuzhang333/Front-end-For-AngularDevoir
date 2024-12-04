@@ -5,6 +5,10 @@ import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from './models/auth.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -12,23 +16,37 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   imports: [RouterOutlet,
             AssignmentListComponent,
             RouterModule,
-            MatSlideToggleModule
+            MatSlideToggleModule,
+            MatButtonModule,
+            MatToolbarModule,
+            MatIconModule,
+            CommonModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'assignment-app-devoir';
-
+  isSidebarActive = false; // 用于控制侧边栏显示状态
 
   constructor(public authService: AuthService, private router: Router) {}
 
   toggleLogin() {
-    if (this.authService.loggedIn) {
-      this.authService.logOut(); // 执行登出
-      this.router.navigate(['/list']); // 登出后跳转到列表页面
+    if (this.authService.isLogged()) {
+      this.authService.logOut();
+      this.router.navigate(['/home']);
     } else {
-      this.authService.logIn(); // 执行登录
+      this.router.navigate(['/login']);
     }
+  }
+  
+  returnHome(){
+    this.isSidebarActive=false;
+    this.router.navigate(['/home']);
+  }
+
+  activeMenu(){
+    this.isSidebarActive=!this.isSidebarActive;
+    console.log('Sidebar active state:', this.isSidebarActive); // 打印状态
   }
 }

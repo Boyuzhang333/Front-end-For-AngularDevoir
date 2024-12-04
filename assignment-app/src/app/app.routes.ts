@@ -5,10 +5,12 @@ import { AddAssignmentComponent } from './add-assignment/add-assignment.componen
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import { EditAssignmentComponent } from './assignment-edit/assignment-edit.component';
 import { authGuard } from './models/auth.guard';
+import { LoginComponent } from './login/login.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'list', pathMatch: 'full' },
-  
+  { path: '', redirectTo: 'home', pathMatch: 'full' }, // 默认重定向到 home
+  { path: 'home', component: WelcomeComponent }, // 欢迎页面
   { path: 'list', component: AssignmentListComponent },
   { path: 'add', component: AddAssignmentComponent },
   { path: 'assignment/:id', component: AssignmentDetailComponent },
@@ -16,5 +18,6 @@ export const routes: Routes = [
     component: EditAssignmentComponent,
     canActivate: [authGuard],
   }, // 编辑作业
+  { path: 'login',component: LoginComponent}
 ];
 

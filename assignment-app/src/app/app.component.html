@@ -1,6 +1,6 @@
 <div class="app-container">
   <!-- 侧边栏 -->
-  <div class="sidebar">
+  <div class="sidebar" *ngIf="isSidebarActive">
     <nav>
       <a routerLink="/list" routerLinkActive="active" class="nav-link">Liste des devoirs</a>
       <a routerLink="/add" routerLinkActive="active" class="nav-link">Ajouter un devoir</a>
@@ -9,14 +9,23 @@
 
   <!-- 主内容 -->
   <div class="content">
-    <!-- 应用标题 -->
-    <h1>{{ title }}</h1>
+    <mat-toolbar>
 
-    <!-- 登录/登出按钮 -->
-    <mat-slide-toggle class="login-toggle" (change)="toggleLogin()">
-      {{ authService.loggedIn ? 'Logout' : 'Login' }}
-    </mat-slide-toggle>
+      <button mat-icon-button (click)="activeMenu()">
+        <mat-icon>menu</mat-icon>
+      </button>
 
+      <button mat-icon-button (click)="toggleLogin()">
+        <mat-icon>{{ authService.isLogged() ? 'logout' : 'person' }}</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="returnHome()">
+        <mat-icon>home</mat-icon>
+      </button>
+    </mat-toolbar>
+  
+
+   
     <!-- 路由出口 -->
     <router-outlet></router-outlet>
   </div>
