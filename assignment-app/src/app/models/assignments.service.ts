@@ -7,7 +7,7 @@ import { Assignment } from '../models/assignment.model';
   providedIn: 'root',
 })
 export class AssignmentsService {
-  backendURL = 'http://localhost:8010/api/assignments'; // 后端 API 地址
+  backendURL = 'https://back-end-for-angulardevoir.onrender.com/api/assignments'; // 后端 API 地址
 
   constructor(private http: HttpClient) {}
 
