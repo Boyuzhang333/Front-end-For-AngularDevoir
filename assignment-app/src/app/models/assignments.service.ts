@@ -1,48 +1,63 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http'; // 引入 HttpClient
+import { Observable } from 'rxjs';
 import { Assignment } from '../models/assignment.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AssignmentsService {
-  private assignments: Assignment[] = [
-    { id:1,nom: 'Devoir 1', rendu: true, dateDeRendu: new Date('2023-11-15') },
-    { id:2,nom: 'Devoir 2', rendu: false, dateDeRendu: new Date('2023-12-01') },
-    { id:3,nom: 'Devoir 3', rendu: true, dateDeRendu: new Date('2023-11-20') }
-  ];
+  backendURL = 'http://localhost:8010/api/assignments'; // 后端 API 地址
 
-  constructor() {}
-  getAssignment(id: number): Observable<Assignment | undefined> {
-    // 从本地数组中找到匹配的作业
-    const assignment = this.assignments.find(a => a.id === id);
-    return of(assignment); // 返回一个 Observable
-  }
-  
+  constructor(private http: HttpClient) {}
 
+  /**
+   * 获取所有作业
+   */
   getAssignments(): Observable<Assignment[]> {
-    return of(this.assignments);
+    return this.http.get<Assignment[]>(this.backendURL); // 从后端获取数据
   }
 
+  /**
+   * 获取单个作业
+   * @param id 作业 ID
+   */
+  getAssignment(id: number|string): Observable<Assignment> {
+    return this.http.get<Assignment>(`${this.backendURL}/${id}`); // 根据 ID 获取单个作业
+  }
+
+  /**
+   * 添加作业
+   * @param assignment 要添加的作业
+   */
   addAssignment(assignment: Assignment): Observable<Assignment> {
-    this.assignments.push(assignment);
-    return of(assignment); // 返回包含新作业的 Observable
+    return this.http.post<Assignment>(this.backendURL, assignment); // 向后端发送 POST 请求
   }
-  deleteAssignment(assignment: Assignment): Observable<Assignment> {
-    this.assignments = this.assignments.filter(a => a.id !== assignment.id);
-    return of(assignment); // 返回已删除的作业
-  }
-  
 
-  updateAssignment(assignment: Assignment): Observable<Assignment> {
-    const index = this.assignments.findIndex((a) => a.id === assignment.id);
-    if (index !== -1) {
-      this.assignments[index] = assignment; // 更新本地数组
-    }
-    return of(assignment); // 返回更新后的作业
+  /**
+   * 删除作业
+   * @param assignment 要删除的作业
+   */
+  deleteAssignment(assignment: Assignment): Observable<void> {
+    return this.http.delete<void>(`${this.backendURL}/${assignment.id}`); // 根据 ID 删除作业
   }
-  
- 
-  
+
+  /**
+   * 更新作业
+   * @param assignment 要更新的作业
+   */
+  updateAssignment(assignment: Assignment): Observable<Assignment> {
+    return this.http.put<Assignment>(
+      `${this.backendURL}/${assignment.id}`,
+      assignment
+    ); // 更新作业
+  }
+
+
+  getAssignmentsPage(page: number, limit: number): Observable<any> {
+    return this.http.get<any>(`${this.backendURL}?page=${page}&limit=${limit}`);
+  }
   
 }
+
+

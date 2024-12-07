@@ -29,6 +29,11 @@ export class AppComponent {
   title = 'assignment-app-devoir';
   isSidebarActive = false; // 用于控制侧边栏显示状态
 
+  currentPage = 1;
+  totalPages = 10; // 假设总页数初始化为 10
+  hasPrevPage = false;
+  hasNextPage = true;
+
   constructor(public authService: AuthService, private router: Router) {}
 
   toggleLogin() {
@@ -40,13 +45,15 @@ export class AppComponent {
     }
   }
   
-  returnHome(){
-    this.isSidebarActive=false;
+  returnHome() {
+    this.isSidebarActive = false;
     this.router.navigate(['/home']);
   }
 
-  activeMenu(){
-    this.isSidebarActive=!this.isSidebarActive;
+  activeMenu() {
+    this.isSidebarActive = !this.isSidebarActive;
     console.log('Sidebar active state:', this.isSidebarActive); // 打印状态
   }
+
+  
 }

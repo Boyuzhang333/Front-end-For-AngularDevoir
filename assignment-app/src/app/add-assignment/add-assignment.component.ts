@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatButton } from '@angular/material/button';
 
+
 @Component({
   selector: 'app-add-assignment',
   standalone: true,
@@ -32,6 +33,7 @@ import { MatButton } from '@angular/material/button';
 })
 export class AddAssignmentComponent {
   assignment: Assignment = {
+    
     nom: '',
     rendu: false,
     dateDeRendu: new Date()
@@ -41,8 +43,9 @@ export class AddAssignmentComponent {
 
   onSubmit() {
     if (this.assignment.nom && this.assignment.dateDeRendu) {
+      this.assignment.id = Date.now() + Math.floor(Math.random() * 1000); // 时间戳+随机数        console.log('Nouveau devoir ajouté:', this.assignment);
+
       this.assignmentsService.addAssignment(this.assignment).subscribe(() => {
-        console.log('Nouveau devoir ajouté:', this.assignment);
         this.router.navigate(['/list']); // 提交后返回作业列表页面
       });
         }

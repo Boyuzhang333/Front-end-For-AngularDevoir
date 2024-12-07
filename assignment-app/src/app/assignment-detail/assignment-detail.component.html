@@ -1,4 +1,4 @@
-<mat-card class="detail-container">
+<mat-card *ngIf="assignment; else loadingTemplate" class="detail-container">
   <mat-card-header>
     <mat-card-title>Détails du devoir</mat-card-title>
     <mat-card-subtitle>{{ assignment.nom }}</mat-card-subtitle>
@@ -20,3 +20,7 @@
     <button mat-raised-button color="primary" routerLink="/list">Retour</button>
   </mat-card-actions>
 </mat-card>
+
+<ng-template #loadingTemplate>
+  <p>Chargement en cours...</p>
+</ng-template>
