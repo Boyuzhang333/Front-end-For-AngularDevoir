@@ -26,7 +26,7 @@ export class AssignmentListComponent implements OnInit {
   selectedAssignment?: Assignment; // 当前选中的作业
   currentPage = 1; // 当前页码
   totalPages = 1; // 总页数
-  limit = 10; // 每页记录数
+  limit = 4; // 每页记录数
 
   constructor(private assignmentsService: AssignmentsService,private router: Router) {}
 
