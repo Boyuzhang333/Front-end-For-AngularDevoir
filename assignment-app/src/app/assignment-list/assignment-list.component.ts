@@ -24,19 +24,36 @@ import { MatCardModule } from '@angular/material/card';
 export class AssignmentListComponent implements OnInit {
   assignments: Assignment[] = [];
   selectedAssignment?: Assignment; // 当前选中的作业
+  currentPage = 1; // 当前页码
+  totalPages = 1; // 总页数
+  limit = 10; // 每页记录数
 
   constructor(private assignmentsService: AssignmentsService,private router: Router) {}
 
   ngOnInit(): void {
-    this.getAssignments();
+    this.getAssignmentsPage();
   }
 
-  getAssignments() {
-    this.assignmentsService.getAssignments().subscribe((assignments: Assignment[]) => {
-      this.assignments = assignments;
+  getAssignmentsPage() {
+    this.assignmentsService.getAssignmentsPage(this.currentPage, this.limit).subscribe((data: any) => {
+      this.assignments = data.docs;
+      this.totalPages = data.totalPages;
     });
+
   }
-  trackByAssignmentNom(index: number, assignment: Assignment): string {
-    return assignment.nom;
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getAssignmentsPage();
+    }
+  }
+
+  // 跳转到下一页
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getAssignmentsPage();
+    }
   }
 }
