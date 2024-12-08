@@ -1,10 +1,6 @@
 [![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=16038265)
-# Angular-start
-## Michel Buffa, Leo Donati, Université Côte d'Azur 
-Repository de démarrage pour vos TP de Angular
-
-
-Projet Angular - Gestion des Assignments
+# Projet Angular - Gestion des Assignments
+## BoyuZHANG 
 
 Ce projet est une application Angular complète permettant de gérer les assignments avec un backend Node.js et une base de données MongoDB.
 
