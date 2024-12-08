@@ -14,6 +14,7 @@ Frontend (Angular) : https://front-end-for-angulardevoir.onrender.com/home
 Backend (API Node) : https://back-end-for-angulardevoir.onrender.com/api/assignments
 
 Fonctionnalités réalisées
+
 Services
 Intégration de services Angular pour la communication avec l'API backend.
 Service pour gérer les données des assignments.
